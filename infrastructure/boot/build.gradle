@@ -1,0 +1,58 @@
+plugins {
+    id "org.springframework.boot" version "${spring_boot_version}"
+}
+
+bootJar {
+    from('src/main/resources/.ebextensions') {
+        into('.ebextensions')
+    }
+    enabled = true
+}
+
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf {
+            it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.flywaydb:flyway-core:10.13.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:10.13.0'
+
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    implementation project(':application')
+    implementation project(':domain:service')
+    implementation project(':domain:model')
+    implementation project(':infrastructure:adapter')
+    implementation project(':infrastructure:repository')
+
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql:42.7.3'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: 'junit', module: 'junit'
+    }
+}
+
+def timestamp() {
+    new Date().format('yyyyMMddHHmmssSSS')
+}
+
+task flywayFile() {
+    doLast {
+        def f = file(new File("${projectDir}/src/main/resources/db/migration/postgres/V${timestamp()}__[NAME].sql"))
+        f.write("/* INSERT NEW SQL - V${timestamp()} */")
+    }
+}

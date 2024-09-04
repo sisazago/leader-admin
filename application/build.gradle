@@ -1,0 +1,19 @@
+plugins {
+	id 'java'
+}
+
+jar.enabled = true
+
+dependencies {
+	implementation 'org.springframework:spring-web'
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+	implementation 'com.co.leader.commons:commons-dto'
+	implementation 'com.co.leader.commons:commons-web'
+	implementation 'com.co.leader.commons:commons-util'
+
+	implementation project(':domain:service')
+	implementation project(':domain:model')
+}

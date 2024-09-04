@@ -1,0 +1,12 @@
+<project name="leader">
+        <target name="generate postgres script">
+        <tstamp>
+        <format property="time.stamp" pattern="yyyyMMddHHmmssSSS"/>
+        </tstamp>
+
+        <echo>V1.0.${time.stamp}__[NAME].sql</echo>
+
+        <!-- Sleep to prevent prefix conflicts when renaming multiple files -->
+        <sleep seconds="1"/>
+        </target>
+</project>

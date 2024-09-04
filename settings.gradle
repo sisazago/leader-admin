@@ -1,0 +1,8 @@
+rootProject.name = 'leader-admin'
+
+include ':domain:model'
+include ':domain:service'
+include ':application'
+include ':infrastructure:repository'
+include ':infrastructure:adapter'
+include ':infrastructure:boot'

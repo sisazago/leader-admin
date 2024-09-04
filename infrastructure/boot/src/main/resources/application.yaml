@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: LEADER-DEMAND
+    profiles:
+        active: ${LEADER_DEMAND_SERVER_PROFILE:prod}
+    banner:
+        location: classpath:banner.txt
+
+server:
+    port: ${SERVER_PORT:8082}
+    servlet:
+        context-path: ${LEADER_DEMAND_SERVER_CONTEXT_PATH:/LEADER-demand}
