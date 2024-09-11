@@ -28,14 +28,16 @@ dependencies {
     implementation 'org.flywaydb:flyway-core:10.13.0'
     implementation 'org.flywaydb:flyway-database-postgresql:10.13.0'
 
-    implementation 'io.springfox:springfox-swagger2:3.0.0'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'com.co.leader.commons:commons-security'
+    implementation 'com.co.leader.commons:commons-properties'
+    implementation 'com.co.leader.commons:commons-util'
 
     implementation project(':application')
     implementation project(':domain:service')
     implementation project(':domain:model')
     implementation project(':infrastructure:adapter')
     implementation project(':infrastructure:repository')
+    implementation project(':infrastructure:security')
 
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql:42.7.3'
@@ -44,13 +46,18 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         exclude group: 'junit', module: 'junit'
     }
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
-def timestamp() {
+test {
+    useJUnitPlatform()
+}
+
+static def timestamp() {
     new Date().format('yyyyMMddHHmmssSSS')
 }
 
-task flywayFile() {
+tasks.register('flywayFile') {
     doLast {
         def f = file(new File("${projectDir}/src/main/resources/db/migration/postgres/V${timestamp()}__[NAME].sql"))
         f.write("/* INSERT NEW SQL - V${timestamp()} */")

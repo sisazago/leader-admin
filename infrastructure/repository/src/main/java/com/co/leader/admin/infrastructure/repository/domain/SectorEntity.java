@@ -9,19 +9,15 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "questions")
-public class QuestionEntity extends Entities<Long> {
+@Table(name = "economic_sectors")
+public class SectorEntity extends Entities<Long> {
 
-    @Column(name = "unique_id", nullable = false, length = 40)
-    private String uniqueId;
+    @Column(name = "sector_name", nullable = false)
+    private String sectorName;
 
-    private String question;
-
-    private String axis;
 }

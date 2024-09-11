@@ -48,9 +48,11 @@ subprojects {
         dependencies {
             dependencySet(group: "com.co.leader.commons", version: "${leader_commons_version}") {
                 entry 'commons-util'
-                entry 'commons-repository'
                 entry 'commons-dto'
+                entry 'commons-dto-jpa-support'
+                entry 'commons-repository'
                 entry 'commons-web'
+                entry 'commons-security'
                 entry 'commons-properties'
             }
         }

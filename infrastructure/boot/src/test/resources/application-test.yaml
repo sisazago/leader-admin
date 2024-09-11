@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    driver-class-name: ${LEADER_DB_DRIVER_CLASS:org.postgresql.Driver}
+    url: ${LEADER_DB_URL:jdbc:postgresql://localhost:5432/leader}
+    username: ${LEADER_DB_USERNAME:postgres}
+    password: ${LEADER_DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    generate-ddl: ${LEADER_JPA_GENERATE_DDL:false}
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: ${LEADER_JPA_DDL_AUTO:none}
+    show-sql: ${LEADER_JPA_SHOW_SQL:true}
+  flyway:
+    enabled: false
+  main:
+    allow-bean-definition-overriding: true
+
+debug: true
+
+logging:
+  level:
+    org.springframework.security: debug
+    com.co.LEADER.demand: trace
+
+application:
+  security:
+    authentication:
+      attempts: 3
+    jwt:
+      signing-key: ${LEADER_JWT_SIGN_KEY:d9343aff3dc523b8bbac1030b45222178a57be206ca83e8f200621dc1467c0e1}
+      token:
+        support-refresh-token: ${LEADER_JWT_SUPPORT_REFRESH_TOKEN:true}
+        access-token-validity-seconds: ${LEADER_JWT_ACCESS_TOKEN_VALIDITY:86400}
+        refresh-token-validity-seconds: ${LEADER_JWT_REFRESH_TOKEN_VALIDITY:86400}
+        reuse-refresh-token: ${LEADER_JWT_REUSE_REFRESH_TOKEN:false}
+    filters:
+      cors:
+        origins: "*"
+        path: "/**"
+        allowCredentials: true
+        methods: "GET,POST,PUT,DELETE,PATCH,OPTIONS"
+        headers: "*"
+        maxAge: 3600
+
